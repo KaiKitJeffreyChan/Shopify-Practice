@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_07_203608) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_24_224606) do
   create_table "cars", force: :cascade do |t|
     t.string "make"
     t.string "model"
@@ -18,4 +18,24 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_07_203608) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "items", force: :cascade do |t|
+    t.string "short_description"
+    t.string "price"
+    t.integer "receipt_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["receipt_id"], name: "index_items_on_receipt_id"
+  end
+
+  create_table "receipts", force: :cascade do |t|
+    t.string "retailer"
+    t.date "purchase_date"
+    t.time "purchase_time"
+    t.string "total"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "items", "receipts"
 end

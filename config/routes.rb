@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :items
+  resources :receipts
   resources :cars
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -10,6 +12,13 @@ Rails.application.routes.draw do
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
+  post '/receipts/process', to: 'receipts#create'
+
+  get '/receipts/:id/points', to: 'receipts#points'
   # Defines the root path route ("/")
   # root "posts#index"
+
+  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  resources :receipts, only: [:index, :show, :destroy, :update]
+  resources :items, only: [:index, :show]
 end
